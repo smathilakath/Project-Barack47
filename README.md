@@ -1,8 +1,8 @@
-Passport Office Simulation challenge - Clear Tax - Author : Sumod Madhavan
+Codename : Barack 47 / Author : Sumod Madhavan
 ==========================================================================
 
-<p>You are in charge of managing / building a passport service office. The job of your office is to take passport applications by citizens, and issue them a new passport.</p>
-For a passport to be issued, you have three independent steps that need to be taken:
+<p>You are in charge of managing / building a barack service office. The job of your office is to take barack applications by citizens, and issue them a new barack.</p>
+For a barack to be issued, you have three independent steps that need to be taken:
 
 * Document verification
 You collect documents from the person, and verify each document. Make sure they are correct, properly attested, collect ID proofs, etc.
@@ -13,7 +13,7 @@ This can be very quick (1-2 minutes if there is no record), or take upto 25-30 m
 * Biometrics collection
 
 You get the fingerprints, etc from the person. This step usually takes around 5-7 minutes.
-Each of these steps needs the person applying for a passport to be physically present.
+Each of these steps needs the person applying for a barack to be physically present.
 Your job is to ensure that the maximum number of people get served – you want to design the office to be as efficient as possible.
 
 The rough layout of your office is:
@@ -99,18 +99,18 @@ To get started, you should:
 
 ## First use instructions
 
-1. Each entity of the passport office is implemented as a separate user program. The passport simulation can be run by executing the entities as separate user program and managing the shared data on one or more servers.
+1. Each entity of the barack office is implemented as a separate user program. The barack simulation can be run by executing the entities as separate user program and managing the shared data on one or more servers.
 
 2. Allow for multiple servers to handle client requests.  Clients are to randomly choose a server to send their request to.  Locks, Conditions, and Monitors will be stored on the server the first CREATE request was sent to.  On a client request if the entity is not found on that server, the server must send requests to each of the other servers to find the requested entity.
 
 3. We have the option to either user Semaphores or a more primitive method such as Thread::Sleep in the implementation. The implementation should address issues such as the lock not holding and other possibilities that violate the rule of mutual exclusion. The implementation must enforce the concept that only the thread that acquired the lock may release the lock. We are to ignore the instructions that if a thread is to do something illegal, that we must terminate Nachos. Made sure that the code is commented, and test the code running the conditiontest1.cc.
 
-4. We are to create a simulation of the Passport Office that utilizes different threads for all of the staff and customers in the simulation. The simulation includes the following people and resources:
+4. We are to create a simulation of the barack Office that utilizes different threads for all of the staff and customers in the simulation. The simulation includes the following people and resources:
 
 * Customer
 * Application Clerk
 * Picture Clerk
-* Passport Clerk
+* barack Clerk
 * Cashier
 * Manager
 
@@ -118,7 +118,7 @@ Each one of these people is responsible for a distinct set of actions and intera
 
 * Customers always take the shortest line, but no 2 customers ever choose the same shortest line at the same time
 * Managers only read one from one Clerk's total money received, at a time.
-* Customers do not leave until they are given their passport by the Cashier. 
+* Customers do not leave until they are given their barack by the Cashier. 
 * The Cashier does not start on another customer until they know that the last Customer has left their area
 * Clerks go on break when they have no one waiting in their line
 * Managers get Clerks off their break when lines get too long
@@ -144,7 +144,7 @@ The simulation is to support the following numbers of each type of person:
 	* Signal
 	* Broadcast.
 * Assume that if multiple clerks are on break, and multiple lines reach more than 3 customers waiting in line, the manager is to wake up one clerk at a time at an order chosen by us (can be *Random*).
-* Assume that 5% of the time, the Passport Clerk will make a mistake with a customer and will not be able to process their application and the customer is to return to the back of the line.
+* Assume that 5% of the time, the barack Clerk will make a mistake with a customer and will not be able to process their application and the customer is to return to the back of the line.
 * Instead of using a data structure such as a list or an array, we use a Boolean to denote if a customer's application has been accepted, denoted by the Boolean 'isAppAccepted'.
 * In the scenario with a limited number of customers, the clerk going on break scenario may result in breakage. For instance, if there is only one customer and a clerk goes on break- the customer will be standing in line eternally as more than three customers are required to be in line for the manager to bring the clerk back from the break. We do not have to address this particular item of breakage, it is allowed by this assignment.
 * Each interaction between two threads should have a different lock, we should not be holding onto a lock for a long time. It is assumed that we use different values of the 'rs' parameter to get context switches in different places.
@@ -166,7 +166,7 @@ The simulation is to support the following numbers of each type of person:
 
 
 #### Class Client (aka Customer in Simulation) contains:
-  - The following variables: the int money representing how much money the customer has and int ssn to represent the social security number(AAdhar ID/Voter Id) and customer identifier. The class contains two booleans to represent the stages of going through the passport office: pictureTaken to indicate whether the customer has successfully interacted with the Picture Clerk and received a photo, and applicationAccepted to denote whether or not the customer's application has been accepted after interacting with the Application clerk. There is an additional Boolean, bribed, that keeps track of whether the customer has currently bribed during this line, or not. The bribe boolean is reset with each line that the customer is in. The int selfIndex represents the customer's own position in the customer queue (making it easier for the clerk to call). 
+  - The following variables: the int money representing how much money the customer has and int ssn to represent the social security number(AAdhar ID/Voter Id) and customer identifier. The class contains two booleans to represent the stages of going through the barack office: pictureTaken to indicate whether the customer has successfully interacted with the Picture Clerk and received a photo, and applicationAccepted to denote whether or not the customer's application has been accepted after interacting with the Application clerk. There is an additional Boolean, bribed, that keeps track of whether the customer has currently bribed during this line, or not. The bribe boolean is reset with each line that the customer is in. The int selfIndex represents the customer's own position in the customer queue (making it easier for the clerk to call). 
   - The int currClerkIndex represents the current clerk who the customer is speaking to's index. 
   - The following methods: 
    - moveUpInLine(), which will allow a customer with greater than or equal to 700 RS to change their bribed variable to true for the following line that they are in, and result in a net loss of 600 RS for the customer, 
@@ -197,7 +197,7 @@ The simulation is to support the following numbers of each type of person:
   - The int lineCount representing the total number of customers in the clerk's line, and the int bribeCount, indicating the number of customers who have bribed the clerk waiting in line. The int selfIndex represents the clerk's own position in the picture clerk queue (making it easier for the clerk to call). The int currClientIndex represents the current client who the clerk is speaking to's index. 
   - The following methods: a getter and setter method for clerkState, denoted as getclerkState() and setclerkState(), the method addToLine() which increases lineCount by 1, the method addToBribeLine() which increases the bribeCount by 1, the method goToWork() which changes the clerk's state to 1 (busy), and the method goOneBreak() which changes the clerk's state to 2(busy).  Getter and setter methods for the selfIndex int. A getter and setter for the int currClientIndex.
  
-#### Class Passport Clerk
+#### Class barack Clerk
   - The following variables: the int clerkState which indicates the clerks state as follows:
    * 0 available
    * 1 busy
@@ -214,11 +214,11 @@ The simulation is to support the following numbers of each type of person:
   - The following methods: a getter and setter method for clerkState, denoted as getclerkState() and setclerkState(), the method addToLine() which increases lineCount by 1, the method addToBribeLine() which increases the bribeCount by 1, the method goToWork() which changes the clerk's state to 1 (busy), and the method goOneBreak() which changes the clerk's state to 2(busy).  Getter and setter methods for the selfIndex int. A getter and setter for the int currClientIndex.
 
 #### Class Manager
-  - The following variables: A vector *aClerks* keeping track of all of the application clerks, a vector *pClerks* keeping track of all the picture clerks, a vector *ppClerks* keeping track of all of the passport clerks, and a vector *cClerks* keeping track of all of the cashiers. An int *aMoney* keeping track of all of the application clerk's money, an int *pMoney* keeping track of all of the picture clerk's money, an int *ppMoney* keeping track of all the passport clerk's money, an int *cMoney* keeping track of all of the cashier's money, and an int called *totalMoney* which is a sum of all of the clerks' money.
+  - The following variables: A vector *aClerks* keeping track of all of the application clerks, a vector *pClerks* keeping track of all the picture clerks, a vector *ppClerks* keeping track of all of the barack clerks, and a vector *cClerks* keeping track of all of the cashiers. An int *aMoney* keeping track of all of the application clerk's money, an int *pMoney* keeping track of all of the picture clerk's money, an int *ppMoney* keeping track of all the barack clerk's money, an int *cMoney* keeping track of all of the cashier's money, and an int called *totalMoney* which is a sum of all of the clerks' money.
   The following methods: A getter and setter method for all of the clerks' respective money totals(getaMoney(),setaMoney(int), getpMoney(),setpMoney(int), getppMoney(), setppMoney(int), get cMoney(), setcMoney(int), gettotalMoney(), and settotalMoney(int, int, int, int), and a wakeClerk(Clerk) method that will change the state of a clerk currently on break because there are greater than three people waiting in their line.
  
 #### Class Police
-   - The following variables: the int money representing how much money the police has and int ssn to represent the social security number and police identifier. The class contains two booleans to represent the stages of going through the passport office: pictureTaken to indicate whether the police has successfully interacted with the Picture Clerk and received a photo, and applicationAccepted to denote whether or not the police's application has been accepted after interacting with the Application clerk. There is an additional Boolean, bribed, that keeps track of whether the police has currently bribed during this line, or not. The bribe boolean is reset with each line that the police is in. 
+   - The following variables: the int money representing how much money the police has and int ssn to represent the social security number and police identifier. The class contains two booleans to represent the stages of going through the barack office: pictureTaken to indicate whether the police has successfully interacted with the Picture Clerk and received a photo, and applicationAccepted to denote whether or not the police's application has been accepted after interacting with the Application clerk. There is an additional Boolean, bribed, that keeps track of whether the police has currently bribed during this line, or not. The bribe boolean is reset with each line that the police is in. 
   The following methods: moveUpInLine(), which will allow a police with greater than or equal to 700 RS to change their bribed variable to true for the following line that they are in, and result in a net loss of 600 RS for the police, setAppAccepted()- a method allowing the bool applicationAccepted to be set, setPictureTaken()- a method allowing the bool pictureTaken to be set, and the bool methods isAppAccepted(), isPictureTaken(), and alreadyBribed() which returns the booleans set in the police class.
 
 Upon receiving the server request, if a server has the requested entity it sends a ‘YES’ back to the requesting server and executes the action to be done.  If the server does not have the entity, it sends a ‘NO’ back to the requesting server.  The requesting server keeps track of if a ‘YES’ response has been received and the number of ‘NO’ responses it has received.  Upon receiving a ‘YES’ server response the requesting server is done handling the request.  Upon receiving all ‘NO’ server responses the server will in the case of a CREATE request create the requested entity and in all other cases return an error message.
@@ -235,19 +235,19 @@ For the use of Condition variables, the request path is slightly different becau
 
 lock and condition code.
 
-* threadtest.cc: implementation code for Passport office and testing
+* threadtest.cc: implementation code for barack office and testing
 
 #### Data structures 
 
 - Struct ApplicationMonitor (in threadtest.cc) accepts numApplicationClerks and numCustomers as arguments and sets conditions and locks for the normal lines and bribe lines.
 - Struct PictureMonitor (in threadtest.cc) accepts numPictureClerks and numCustomers as arguments and sets conditions and locks for the normal lines and bribe lines.
-- Struct PassportMonitor (in threadtest.cc) accepts numPassportClerks and numCustomers as arguments and sets conditions and locks for the normal lines and bribe lines.
+- Struct barackMonitor (in threadtest.cc) accepts numbarackClerks and numCustomers as arguments and sets conditions and locks for the normal lines and bribe lines.
 - Struct CashierMonitor (in threadtest.cc) accepts numCashiers and numCustomers as arguments and sets conditions and locks for the normal lines and bribe lines.
 - Struct ManagerMonitor (in threadtest.cc) accepts numClerksOnBreak as arguments and sets conditions and locks for clerks on break.
 - Class Client (in threadtest.cc) contains int money, int ssn, and the booleans applicationAccepted, pictureTaken, bribed, and missingReqs and the public getters and setters for these variables.
 - Class ApplicationClerk (in threadtest.cc) contains int clerkState, int lineCount, int bribeLineCount, int clerkMoney, and int myLine and the getters and setters for these variables.
 - Class PictureClerk (in threadtest.cc) contains int clerkState, int lineCount, int bribeLineCount, int clerkMoney, and int myLine and the getters and setters for these variables.
-- Class PassportClerk (in threadtest.cc) contains int clerkState, int lineCount, int bribeLineCount, int clerkMoney, and int myLine and the getters and setters for these variables.
+- Class barackClerk (in threadtest.cc) contains int clerkState, int lineCount, int bribeLineCount, int clerkMoney, and int myLine and the getters and setters for these variables.
 - Class Cashier (in threadtest.cc) contains int clerkState, int lineCount, int bribeLineCount, int clerkMoney, and int myLine and the getters and setters for these variables.
 - Class Manager (in threadtest.cc) contains ints representing each clerk's money amount, and the total money and getters and setters for these variables.
 - Class police (in threadtest.cc) contains int money, int ssn, and the booleans applicationAccepted, pictureTaken, bribed, and missingReqs and the public getters and setters for these variables.
@@ -263,12 +263,12 @@ lock and condition code.
 - void giveCertifications(int line, bool certified) in threadtest.cc pushes the boolean certified into the line that it belongs in the list of customerCertifications.
 - void joinApplicationLine() in threadtest.cc allows the client to get the AppMonitor lock and later to release it.
 - void joinPictureLine() in threadtest.cc allows the client to get the PictureMonitor lock and later to release it.
-- void joinPassportLine() in threadtest.cc allows the client to get the PassportMonitor lock and later to release it.
+- void joinbarackLine() in threadtest.cc allows the client to get the barackMonitor lock and later to release it.
 - void joinCashierLine() in threadtest.cc allows the client to get the CashierMonitor lock and later to release it.
 - void createCustomer() in threadtest.cc sets a random money number, creates a new customer with a random money number, and adds the customer to the customers list.
 - void createApplicationClerk() in threadtest.cc creates a new application clerk and pushes it to the application clerk list.
 - void createPictureClerk() in threadtest.cc creates a new picture clerk and pushes it to the picture clerk list.
-- void createPassportClerk() in threadtest.cc creates a new passport clerk and pushes it to the passport clerk list.
+- void createbarackClerk() in threadtest.cc creates a new barack clerk and pushes it to the barack clerk list.
 - void createCashier() in threadtest.cc creates a new cashier and pushes it to the cashiers list.
 - void createManager() in threadtest.cc creates a single new manager.
 - void createPolice() in threadtest.cc sets a random money number, creates a new police with a random money number, and adds the police to the police list.
@@ -299,21 +299,21 @@ Test: Run the simulation and verify that the each customer you created is joinin
 **Expected Output:**
 Customer [identifier] has gotten in regular line for ApplicationClerk [identifier].
 Customer [identifier] has gotten in regular line for PictureClerk [identifier].
-Customer [identifier] has gotten in regular line for PassportClerk [identifier].
+Customer [identifier] has gotten in regular line for barackClerk [identifier].
 Customer [identifier] has gotten in regular line for Cashier [identifier].
 3. Managers only read one from one Clerk's total money received, at a time.
 Test: Run the simulation, and observe the nature of the output. Due to the way that the money system is coded, it is not possible for the managers to read from more than one clerk's total money received at a time.
 **Expected Output:**
 Manager has counted a total of RS[amount of money] for ApplicationClerks
 Manager has counted a total of RS[amount of money] for PictureClerks
-Manager has counted a total of RS[amount of money] for PassportClerks
+Manager has counted a total of RS[amount of money] for barackClerks
 Manager has counted a total of RS[amount of money] for Cashiers
-4. Customers do not leave until they are given their passport by the Cashier. The Cashier does not start on another customer until they know that the last Customer has left their area.
-Test:Create customers in the simulation, and verify that they have gone through each state prior to receiving a passport from the cashier. Once you view the message that the cashier has given the customer with the identifier their passport, watch for a message from the same customer that they are leaving the passport office. Only after that message is printed can the cashier become available for a new customer.
+4. Customers do not leave until they are given their barack by the Cashier. The Cashier does not start on another customer until they know that the last Customer has left their area.
+Test:Create customers in the simulation, and verify that they have gone through each state prior to receiving a barack from the cashier. Once you view the message that the cashier has given the customer with the identifier their barack, watch for a message from the same customer that they are leaving the barack office. Only after that message is printed can the cashier become available for a new customer.
 **Expected Output:**
-Cashier [identifier] has provided Customer[identifier] their completed passport
-Cashier [identifier] has provided Customer[identifier] their completed passport
-Customer [identifier] is leaving the Passport Office.
+Cashier [identifier] has provided Customer[identifier] their completed barack
+Cashier [identifier] has provided Customer[identifier] their completed barack
+Customer [identifier] is leaving the barack Office.
 Cashier [identifier] has signalled a Customer to come to their counter.
 5. Clerks go on break when they have no one waiting in their line
 Test: Create intentionally fewer customers, like 1-2. Watch the clerks who are currently not interacting with the customers to verify whether or not the clerks should go on break. 
@@ -338,14 +338,14 @@ Expected Output (One of many possible examples):
 Cashier [identifier] has signalled a Customer to come to their counter.
 Customer [identifier] has given Cashier [identifier] RS100.
 police [identifier] has gotten in regular line for ApplicationClerk [identifier].
-Customer [identifier] is going outside the Passport Office because their is a police present.
+Customer [identifier] is going outside the barack Office because their is a police present.
 
-**To test the distributed passport office simulation, run the following commands**
+**To test the distributed barack office simulation, run the following commands**
 
     '''Bash
 
     nachos -server -m 0 -sn 1
-    nachos -m 1 -sn 1 -x mini_passport_office_net_test
+    nachos -m 1 -sn 1 -x mini_barack_office_net_test
 
     '''
 
@@ -366,12 +366,12 @@ This shows that waiting and signalling work as distributed RPCs. Setting the ran
 1. You should be able to enter the number of clients and all different types of clerks and police in the command prompt (within acceptable range) and verify that the number you entered is the number that the simulation produced.
 2. Customers always take the shortest line, but no 2 customers ever choose the same shortest line at the same time
 3. Managers only read one from one Clerk's total money received, at a time.
-4. Customers do not leave until they are given their passport by the Cashier. The Cashier does not start on another customer until they know that the last Customer has left their area
+4. Customers do not leave until they are given their barack by the Cashier. The Cashier does not start on another customer until they know that the last Customer has left their area
 5. Clerks go on break when they have no one waiting in their line
 6. Managers get Clerks off their break when lines get too long
 7. Total sales never suffers from a race condition
 8. The behavior of Customers is proper when police arrive. This is before, during, and after.
-9. The passport office simulation should complete successfully (all customers should leave).
+9. The barack office simulation should complete successfully (all customers should leave).
 10.The manager thread should remain running and periodically output the collected money for the office.
 
 
